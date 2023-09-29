@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Orange Section
+  - Pink Section
+  - Blue Section
+  - Cian Section
+  - Yellow Section
+  - Green Section
   layers:
   - Default
   - TransparentFX

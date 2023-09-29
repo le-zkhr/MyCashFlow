@@ -6,13 +6,15 @@ public class WheelLogic : MonoBehaviour
 {
     [SerializeField] private Image[] _spins = new Image[3];
     [SerializeField] private Sprite _redIndicator;
+    [SerializeField] private GameObject _drumCenter;
     [SerializeField] private float _startWheelSpeed = 20f, _interval = 0.5f;
     [SerializeField] private int _decreaser = 1;
 
     public int startAge = 0, salary = 0;
+    public bool isWheelStopped;
 
     private Sprite _greenIndicator;
-    private bool _canSpinWheel = true, _isWheelSpinning = false;
+    private bool _canSpinWheel = true, _isWheelSpinning;
     private float _defaultWheelSpeed = 0;
     private int _spin = 0;
 
@@ -24,7 +26,7 @@ public class WheelLogic : MonoBehaviour
     private void Update()
     {
         if(_isWheelSpinning)
-            transform.Rotate(0f, 0f, _startWheelSpeed * Time.deltaTime);
+            _drumCenter.transform.Rotate(0f, 0f, _startWheelSpeed * Time.deltaTime);
 
         if (_startWheelSpeed <= 0)
             ResetWheelSpeed();
@@ -40,7 +42,7 @@ public class WheelLogic : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
+    public void SpinTheWheel()
     {
         if(_canSpinWheel)
         {
@@ -49,21 +51,10 @@ public class WheelLogic : MonoBehaviour
 
             _isWheelSpinning = true;
             _canSpinWheel = false;
+            isWheelStopped = false;
             startAge++;
 
-            if (_spin <= _spins.Length - 1)
-            {
-                _spins[_spin].GetComponent<Image>().sprite = _redIndicator;
-                _spin++;
-            }
-            else
-            {
-                _spin = 0;
-                salary += 1000;
-
-                for (int i = 0; i < _spins.Length; i++)
-                    _spins[i].GetComponent<Image>().sprite = _greenIndicator;
-            }
+            SpinsAndSalaryLogic();
         }         
     }
     private void ResetWheelSpeed()
@@ -71,5 +62,22 @@ public class WheelLogic : MonoBehaviour
         _startWheelSpeed = _defaultWheelSpeed;
         _canSpinWheel = true;
         _isWheelSpinning = false;
+        isWheelStopped = true;
+    }
+    private void SpinsAndSalaryLogic()
+    {
+        if (_spin < _spins.Length - 1)
+        {
+            _spins[_spin].GetComponent<Image>().sprite = _redIndicator;
+            _spin++;
+        }
+        else
+        {
+            _spin = 0;
+            salary += 1000;
+
+            for (int i = 0; i < _spins.Length; i++)
+                _spins[i].GetComponent<Image>().sprite = _greenIndicator;
+        }
     }
 }

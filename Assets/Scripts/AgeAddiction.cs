@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class AgeAddiction : MonoBehaviour
 {
-    [SerializeField] private GameObject _drum;
+    [SerializeField] private GameObject _drumCenter;
 
     private Text _ageData;
     private int _age = 0;
@@ -14,7 +14,7 @@ public class AgeAddiction : MonoBehaviour
     }
     private void Update()
     {
-        _age = _drum.GetComponent<WheelLogic>().startAge;
+        _age = _drumCenter.GetComponent<WheelLogic>().startAge;
         _ageData.text = _age.ToString();
     }
 }
