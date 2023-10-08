@@ -4,17 +4,23 @@ using UnityEngine.UI;
 public class MoneyControlling : MonoBehaviour
 {
     [SerializeField] private GameObject _drumCenter;
-
-    private Text _moneyAmount;
-    private int _salary = 0;
+    
+    private float _moneyAmount;
+    private Text _moneyAmountText;
 
     private void Start()
     {
-        _moneyAmount = gameObject.GetComponent<Text>();
+        _moneyAmountText = gameObject.GetComponent<Text>();
     }
     private void Update()
     {
-        _salary = _drumCenter.GetComponent<WheelLogic>().salary;
-        _moneyAmount.text = _salary.ToString();
+        _moneyAmount = _drumCenter.GetComponent<WheelLogic>().moneyAmount;
+        if(_moneyAmount >= 1000)
+            _moneyAmountText.text = (_moneyAmount / 1000.0).ToString() + 'K';
+        else if (_moneyAmount >= 1000000)
+            _moneyAmountText.text = (_moneyAmount / 1000000.0).ToString() + 'M';
+        else
+            _moneyAmountText.text = _moneyAmount.ToString();
+
     }
 }
